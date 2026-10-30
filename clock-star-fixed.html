@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#de620c">
+  <title>clock ★</title>
+
+  <!-- Fraunces from Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --orange: #de620c;
+      --orange-dark: #a94308;
+      --orange-light: #ffad62;
+      --cream: #fff3e4;
+      --screen: #512306;
+      --screen-text: #ffe2bd;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      padding: 24px;
+      display: grid;
+      place-items: center;
+      background:
+        radial-gradient(circle at 12% 18%, #de620c 0 2px, transparent 3px),
+        radial-gradient(circle at 84% 72%, #f6a15c 0 2px, transparent 3px),
+        #fff3e4;
+      background-size: 30px 30px, 42px 42px, auto;
+      font-family: "Fraunces", Georgia, serif;
+    }
+
+    .clock-shell {
+      position: relative;
+      width: min(100%, 390px);
+      padding: 19px;
+      overflow: hidden;
+      border: 3px solid var(--orange-dark);
+      border-radius: 29px 29px 35px 35px;
+      background: linear-gradient(145deg, #f58a36, var(--orange) 58%, #c95108);
+      box-shadow: 0 8px 0 var(--orange-dark), 0 16px 30px #7b390b35,
+                  inset 0 3px 0 #ffc18d;
+    }
+
+    .shine {
+      position: absolute;
+      top: 9px;
+      left: 28px;
+      width: 115px;
+      height: 5px;
+      border-radius: 99px;
+      background: #ffffff70;
+      transform: rotate(-8deg);
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+      margin: 5px 2px 15px;
+      color: var(--cream);
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .brand {
+      font-size: 23px;
+      font-weight: 700;
+      letter-spacing: -.5px;
+      text-shadow: 1px 2px 0 var(--orange-dark);
+    }
+
+    .status {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #ffe2a8;
+      box-shadow: 0 0 9px #ffe2a8;
+    }
+
+    .screen-frame {
+      padding: 8px;
+      border: 2px solid #873506;
+      border-radius: 19px;
+      background: linear-gradient(145deg, #bd4d08, #f58a36);
+      box-shadow: inset 0 2px 5px #74300688, 0 2px 0 #ffc18d;
+    }
+
+    .screen {
+      min-height: 150px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 16px 10px 14px;
+      border: 2px solid #351702;
+      border-radius: 12px;
+      background: linear-gradient(180deg, #63300c, var(--screen));
+      box-shadow: inset 0 0 18px #1c0b02, 0 0 0 2px #ffffff18;
+      color: var(--screen-text);
+      text-align: center;
+    }
+
+    .screen-label {
+      margin-bottom: 7px;
+      color: var(--orange-light);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 3px;
+    }
+
+    #time {
+      font-size: clamp(36px, 10vw, 49px);
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -1px;
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+      text-shadow: 0 0 8px #ffbd806b, 0 0 18px #de620c55;
+    }
+
+    #date {
+      margin-top: 8px;
+      color: #ffd0a1;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .message {
+      margin: 17px 0 3px;
+      color: var(--cream);
+      text-align: center;
+      font-size: 19px;
+      font-weight: 700;
+      letter-spacing: .4px;
+      text-shadow: 1px 2px 0 var(--orange-dark);
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 15px 3px 1px;
+    }
+
+    .decor {
+      color: #ffe0ad;
+      font-size: 21px;
+      letter-spacing: 4px;
+      text-shadow: 1px 2px 0 var(--orange-dark);
+    }
+
+    .buttons { display: flex; gap: 9px; }
+
+    .button {
+      width: 22px;
+      height: 22px;
+      border: 2px solid var(--orange-dark);
+      border-radius: 50%;
+      background: linear-gradient(145deg, #ffd09b, var(--orange-light));
+      box-shadow: 0 3px 0 #853305, inset 0 2px 0 #fff0d9;
+    }
+
+    .button:nth-child(2) {
+      background: linear-gradient(145deg, #f6a15c, #c94d08);
+    }
+
+    @media (max-width: 360px) {
+      .clock-shell { padding: 14px; }
+      #time { font-size: 34px; }
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .status-dot { animation: pulse 1.8s ease-in-out infinite; }
+      @keyframes pulse {
+        50% { opacity: .45; box-shadow: 0 0 2px #ffe2a8; }
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="clock-shell" aria-label="clock star">
+    <div class="shine" aria-hidden="true"></div>
+
+    <header class="header">
+      <span class="brand">clock ★</span>
+      <span class="status"><span class="status-dot"></span> ONLINE</span>
+    </header>
+
+    <div class="screen-frame">
+      <section class="screen" aria-label="Current local time">
+        <div class="screen-label">LOCAL TIME</div>
+        <div id="time">00:00:00</div>
+        <div id="date">LOADING DATE...</div>
+      </section>
+    </div>
+
+    <p class="message">♡ your time is now ♡</p>
+
+    <footer class="footer" aria-hidden="true">
+      <span class="decor">✦ · ✧ · ✦</span>
+      <span class="buttons">
+        <span class="button"></span>
+        <span class="button"></span>
+      </span>
+    </footer>
+  </main>
+
+  <script>
+    (() => {
+      const timeElement = document.getElementById("time");
+      const dateElement = document.getElementById("date");
+
+      function updateClock() {
+        const now = new Date();
+
+        timeElement.textContent = now.toLocaleTimeString("en-GB", {
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: false
+        });
+
+        dateElement.textContent = now.toLocaleDateString("en-GB", {
+          weekday: "short",
+          day: "numeric",
+          month: "short",
+          year: "numeric"
+        });
+      }
+
+      updateClock();
+      window.setInterval(updateClock, 1000);
+    })();
+  </script>
+</body>
+</html>
